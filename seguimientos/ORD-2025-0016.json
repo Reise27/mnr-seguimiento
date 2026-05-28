@@ -1,0 +1,8 @@
+{
+    "orden": "ORD-2025-0016",
+    "cliente": "Nahuel",
+    "equipo": "PC Esctritorio",
+    "estado": "🟡 En diagnóstico",
+    "mensaje": "Esperando respuesta del cliente",
+    "progreso": 25
+}
