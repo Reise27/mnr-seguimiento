@@ -20,7 +20,7 @@ logo_base64 = get_base64("logo.png")
 query_params = st.query_params
 ord_id = query_params.get("id", "ORD-2026-0024")
 
-json_path = Path("../seguimientos") / f"{ord_id}.json"
+json_path = Path("seguimientos") / f"{ord_id}.json"
 
 if not json_path.exists():
     st.error("No se encontró el seguimiento solicitado.")
