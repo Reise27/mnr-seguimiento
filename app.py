@@ -124,7 +124,7 @@ ord_id = query_params.get("id", "MNR-1032")
 # BUSCAR JSON
 # ==================================================
 
-json_path = Path("../seguimientos") / f"{ord_id}.json"
+json_path = Path("seguimientos") / f"{ord_id}.json"
 
 st.write("Buscando archivo en:")
 st.write(json_path.resolve())
