@@ -2,7 +2,7 @@
     "orden": "ORD-2026-0024",
     "cliente": "Nico Mecánico",
     "equipo": "PC Escritorio",
-    "estado": "🟢 Listo para retirar",
-    "mensaje": "vxcvbxcvbxcvb",
-    "progreso": 100
+    "estado": "🟡 En diagnóstico",
+    "mensaje": "",
+    "progreso": 25
 }
