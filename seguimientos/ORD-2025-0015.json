@@ -1,0 +1,8 @@
+{
+    "orden": "ORD-2025-0015",
+    "cliente": "Alan",
+    "equipo": "PC Escritorio",
+    "estado": "🟢 Listo para retirar",
+    "mensaje": "La PC esta lista para retirar por el taller.",
+    "progreso": 100
+}
