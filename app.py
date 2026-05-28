@@ -1,133 +1,27 @@
 import streamlit as st
 import json
 from pathlib import Path
-
-# ==================================================
-# CONFIG
-# ==================================================
+from datetime import datetime
+import base64
 
 st.set_page_config(
     page_title="MNR Seguimiento",
     page_icon="🖥️",
-    layout="centered"
+    layout="wide"
 )
 
-# ==================================================
-# COLORES MNR
-# ==================================================
 
-APP_BLUE = "#1b2f7b"
-BACKGROUND = "#081229"
-CARD = "#111c36"
-TEXT = "#f8fafc"
-MUTED = "#94a3b8"
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
 
-# ==================================================
-# CSS PREMIUM
-# ==================================================
-
-st.markdown(f"""
-<style>
-
-html, body, [class*="css"] {{
-    font-family: 'Segoe UI', sans-serif;
-}}
-
-.stApp {{
-    background: linear-gradient(
-        180deg,
-        #081229 0%,
-        #0b1731 100%
-    );
-    color: white;
-}}
-
-.block-container {{
-     padding-top: 1rem;
-    padding-bottom: 1rem;
-}}
-
-.main-card {{
-     background: rgba(17, 28, 54, 0.95);
-    padding: 18px;
-    border-radius: 20px;
-    margin-bottom: 14px;
-}}
-
-.title {{
-    color: white;
-    font-size: 42px;
-    font-weight: 800;
-    text-align: center;
-    margin-top: 10px;
-}}
-
-.subtitle {{
-    color: {MUTED};
-    text-align: center;
-    font-size: 17px;
-    margin-bottom: 40px;
-}}
-
-.card-title {{
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 16px;
-}}
-
-.status {{
-    font-size: 34px;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 15px;
-}}
-
-.info {{
-    color: {TEXT};
-    font-size: 17px;
-    line-height: 1.7;
-}}
-
-.footer {{
-    text-align: center;
-    color: {MUTED};
-    margin-top: 45px;
-    font-size: 14px;
-}}
-
-.message-box {{
-    border-left: 4px solid {APP_BLUE};
-    padding-left: 16px;
-    margin-top: 10px;
-}}
-
-.logo-glow {{
-    text-align: center;
-    font-size: 58px;
-    margin-bottom: 5px;
-    filter: drop-shadow(0px 0px 10px rgba(59,130,246,0.45));
-}}
-
-</style>
-""", unsafe_allow_html=True)
-
-# ==================================================
-# LEER ID
-# ==================================================
+logo_base64 = get_base64("logo.png")
 
 query_params = st.query_params
+ord_id = query_params.get("id", "ORD-2026-0024")
 
-ord_id = query_params.get("id", "MNR-1032")
+json_path = Path("../seguimientos") / f"{ord_id}.json"
 
-# ==================================================
-# BUSCAR JSON
-# ==================================================
-
-json_path = Path("seguimientos") / f"{ord_id}.json"
-
-st.write("Buscando archivo en:")
-st.write(json_path.resolve())
 if not json_path.exists():
     st.error("No se encontró el seguimiento solicitado.")
     st.stop()
@@ -135,160 +29,228 @@ if not json_path.exists():
 with open(json_path, "r", encoding="utf-8") as f:
     dados = json.load(f)
 
-# ==================================================
-# COLOR ESTADO
-# ==================================================
+fecha_actual = datetime.now().strftime("%d/%m/%Y - %H:%M hs")
 
 estado = dados["estado"]
 
-if "Listo" in estado:
+if "listo" in estado.lower():
     estado_color = "#22c55e"
-
-elif "Esperando" in estado:
+elif "esperando" in estado.lower():
     estado_color = "#f97316"
-
 elif "diagnóstico" in estado.lower():
     estado_color = "#eab308"
-
 else:
     estado_color = "#3b82f6"
 
-# ==================================================
-# HEADER
-# ==================================================
+st.markdown("""
+<style>
 
-st.markdown(
-    f"""
-    <div class='logo-glow'>🖥️</div>
-    <div class='title'>MNR COMPUTACIÓN</div>
-    <div class='subtitle'>
-        Seguimiento de equipos en tiempo real
+html, body, [class*="css"] {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.stApp {
+    background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.15), transparent 30%),
+        radial-gradient(circle at top right, rgba(37,99,235,0.10), transparent 25%),
+        #020b24;
+    color: white;
+}
+
+.block-container {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    max-width: 1400px;
+}
+
+.glass {
+    background: rgba(10, 20, 45, 0.72);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(59,130,246,0.18);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow:
+        0 0 25px rgba(0,0,0,0.35),
+        0 0 40px rgba(59,130,246,0.06);
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #9ca3af;
+    margin-top: 5px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.estado {
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.info {
+    color: #d1d5db;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+.logo {
+    width: 240px;
+}
+
+.fecha {
+    text-align: right;
+    color: #cbd5e1;
+    font-size: 16px;
+}
+
+.progreso {
+    font-size: 16px;
+    margin-top: 12px;
+    color: #cbd5e1;
+}
+
+.footer {
+    text-align: center;
+    color: #64748b;
+    margin-top: 20px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+col1, col2 = st.columns([3,1])
+
+with col1:
+
+    inside1, inside2 = st.columns([1,2])
+
+    with inside1:
+        st.image("logo.png", width=220)
+
+    with inside2:
+
+        st.markdown("""
+        <div style='padding-top:40px'>
+
+        <div style="
+        font-size:52px;
+        font-weight:800;
+        color:white;
+        ">
+            MNR Computación
+        </div>
+
+        <div style="
+        font-size:24px;
+        color:#94a3b8;
+        margin-top:10px;
+        ">
+            Seguimiento de equipos
+        </div>
+
+        </div>
+        """, unsafe_allow_html=True)
+with col2:
+    st.markdown(f"""
+    <div class="glass">
+        <div class="card-title">
+            🕒 Última actualización
+        </div>
+        <div class="fecha">
+            {fecha_actual}
+        </div>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+    """, unsafe_allow_html=True)
 
-# ==================================================
-# ESTADO
-# ==================================================
+left, right = st.columns([1,1.3])
 
-st.markdown("<div class='main-card'>", unsafe_allow_html=True)
-
-st.markdown(
-    "<div class='card-title'>Estado actual</div>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    f'''
-    <div class='status' style='color:{estado_color};'>
-        {estado}
+with left:
+    st.markdown(f"""
+    <div class="glass">
+        <div class="card-title">
+            📦 Orden de servicio
+        </div>
+        <div class="title">
+            {dados["orden"]}
+        </div>
     </div>
-    ''',
-    unsafe_allow_html=True
-)
+    """, unsafe_allow_html=True)
 
-st.progress(int(dados["progreso"]) / 100)
-
-st.markdown(
-    f"""
-    <div class='info' style='margin-top:10px;'>
-        {dados["progreso"]}% completado
+    st.markdown(f"""
+    <div class="glass">
+        <div class="card-title">
+            💻 Información del equipo
+        </div>
+        <div class="info">
+            <b>Cliente:</b> {dados["cliente"]}<br><br>
+            <b>Equipo:</b> {dados["equipo"]}
+        </div>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+    """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
-
-# ==================================================
-# EQUIPO
-# ==================================================
-
-st.markdown("<div class='main-card'>", unsafe_allow_html=True)
-
-st.markdown(
-    "<div class='card-title'>Equipo</div>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    f"""
-    <div class='info'>
-        💻 {dados["equipo"]}
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    f"""
-    <div class='info'>
-        👤 {dados["cliente"]}
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown("</div>", unsafe_allow_html=True)
-
-# ==================================================
-# MENSAJE
-# ==================================================
-
-st.markdown("<div class='main-card'>", unsafe_allow_html=True)
-
-st.markdown(
-    "<div class='card-title'>Última actualización</div>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    f"""
-    <div class='message-box'>
-        <div class='info'>
+    st.markdown(f"""
+    <div class="glass">
+        <div class="card-title">
+            ⚡ Estado actual
+        </div>
+        <div class="estado" style="color:{estado_color}">
+            {estado}
+        </div>
+        <br>
+        <div class="info">
             {dados["mensaje"]}
         </div>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+    """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div class="glass">
+        <div class="card-title">
+            📈 Progreso general
+        </div>
+    """, unsafe_allow_html=True)
 
-# ==================================================
-# CONTACTO
-# ==================================================
+    st.progress(int(dados["progreso"]) / 100)
 
-st.markdown("<div class='main-card'>", unsafe_allow_html=True)
-
-st.markdown(
-    "<div class='card-title'>Contacto</div>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <div class='info'>
-        📍 Paraná, Entre Ríos<br><br>
-        📸 Instagram: @mnr.computacion<br><br>
-        📱 WhatsApp: 3434602256
+    st.markdown(f"""
+        <div class="progreso">
+            {dados["progreso"]}% completado
+        </div>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+    """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
+with right:
 
-# ==================================================
-# FOOTER
-# ==================================================
+    st.subheader("🧾 Historial del seguimiento")
 
-st.markdown(
-    """
-    <div class='footer'>
-        MNR Computación • Servicio técnico profesional
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    st.markdown("")
+
+    st.markdown(
+        f"""
+### <span style='color:{estado_color}'>{estado}</span>
+
+{dados["mensaje"]}
+
+<div style='color:#94a3b8; font-size:14px'>
+{fecha_actual}
+</div>
+""",
+        unsafe_allow_html=True
+    )
+
+st.markdown("""
+<div class="footer">
+    MNR Computación • Servicio técnico profesional
+</div>
+""", unsafe_allow_html=True)
