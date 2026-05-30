@@ -168,39 +168,15 @@ with col1:
         </div>
         """, unsafe_allow_html=True)
 with col2:
-    st.markdown(f"""
-    <div class="glass">
-        <div class="card-title">
-            🕒 Última actualización
-        </div>
-        <div class="fecha">
-            {fecha_actual}
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-st.markdown(f"""
-<div class="glass">
-    <div class="card-title">
-        🔧 Estado de tu equipo
-    </div>
-
-    <div class="estado" style="color:{estado_color}; margin-bottom:20px;">
-        {estado}
-    </div>
-
-    <div style="background:rgba(255,255,255,0.04); border-radius:16px; padding:18px; border-left:4px solid {estado_color};">
-        <div style="color:#cbd5e1; font-size:14px; margin-bottom:8px;">
-            💬 Mensaje del técnico
-        </div>
-
-        <div class="info">
-            {dados["mensaje"]}
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+    
+    st.markdown('<div class="glass">', unsafe_allow_html=True)
+    st.markdown("### 🔧 Estado de tu equipo")
+    st.markdown(
+    f"<div style='font-size:42px;font-weight:800;color:{estado_color};margin-bottom:15px'>{estado}</div>",
+    unsafe_allow_html=True
+)
+st.info(dados["mensaje"])
+st.markdown('</div>', unsafe_allow_html=True)
 
 left, right = st.columns([1,1.3])
 
@@ -225,6 +201,21 @@ with left:
         <div class="info">
             <b>Cliente:</b> {dados["cliente"]}<br><br>
             <b>Equipo:</b> {dados["equipo"]}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown(f"""
+    <div class="glass">
+        <div class="card-title">
+            ⚡ Estado actual
+        </div>
+        <div class="estado" style="color:{estado_color}">
+            {estado}
+        </div>
+        <br>
+        <div class="info">
+            {dados["mensaje"]}
         </div>
     </div>
     """, unsafe_allow_html=True)
