@@ -215,20 +215,6 @@ with left:
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown(f"""
-    <div class="glass">
-        <div class="card-title">
-            ⚡ Estado actual
-        </div>
-        <div class="estado" style="color:{estado_color}">
-            {estado}
-        </div>
-        <br>
-        <div class="info">
-            {dados["mensaje"]}
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
 
     st.markdown("""
     <div class="glass">
