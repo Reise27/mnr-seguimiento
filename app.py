@@ -175,6 +175,23 @@ with col2:
     f"<div style='font-size:42px;font-weight:800;color:{estado_color};margin-bottom:15px'>{estado}</div>",
     unsafe_allow_html=True
 )
+st.markdown("### 🔧 Estado de tu equipo")
+
+st.markdown(
+    f"""
+    <div style="
+        font-size:52px;
+        font-weight:900;
+        color:{estado_color};
+        text-transform:uppercase;
+        margin-bottom:20px;
+    ">
+        {estado}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.info(dados["mensaje"])
 st.markdown('</div>', unsafe_allow_html=True)
 
