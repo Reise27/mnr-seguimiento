@@ -1,0 +1,8 @@
+{
+    "orden": "ORD-2026-0009",
+    "cliente": "Viana",
+    "equipo": "notebook acer",
+    "estado": "🔵 En reparación",
+    "mensaje": "La pc está siendo reparada.",
+    "progreso": 75
+}
