@@ -167,14 +167,7 @@ with col1:
 
         </div>
         """, unsafe_allow_html=True)
-with col2:
-    
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.markdown("### 🔧 Estado de tu equipo")
-    st.markdown(
-    f"<div style='font-size:42px;font-weight:800;color:{estado_color};margin-bottom:15px'>{estado}</div>",
-    unsafe_allow_html=True
-)
+        
 st.markdown("### 🔧 Estado de tu equipo")
 
 st.markdown(
