@@ -254,23 +254,7 @@ with left:
     """, unsafe_allow_html=True)
 
 with right:
-
-    st.subheader("🧾 Historial del seguimiento")
-
-    st.markdown("")
-
-    st.markdown(
-        f"""
-### <span style='color:{estado_color}'>{estado}</span>
-
-{dados["mensaje"]}
-
-<div style='color:#94a3b8; font-size:14px'>
-{fecha_actual}
-</div>
-""",
-        unsafe_allow_html=True
-    )
+    pass
 
 st.markdown("""
 <div class="footer">
