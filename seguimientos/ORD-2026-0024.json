@@ -3,6 +3,6 @@
     "cliente": "Nico Mecánico",
     "equipo": "PC Escritorio",
     "estado": "🟡 En diagnóstico",
-    "mensaje": "La pc está en revisión",
-    "progreso": 53
+    "mensaje": "La pc entró y está en revisión.",
+    "progreso": 25
 }
