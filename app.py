@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 from datetime import datetime
 import base64
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 st.set_page_config(
     page_title="MNR Seguimiento",
@@ -29,7 +31,11 @@ if not json_path.exists():
 with open(json_path, "r", encoding="utf-8") as f:
     dados = json.load(f)
 
-fecha_actual = datetime.now().strftime("%d/%m/%Y - %H:%M hs")
+from zoneinfo import ZoneInfo
+
+fecha_actual = datetime.now(
+    ZoneInfo("America/Argentina/Buenos_Aires")
+).strftime("%d/%m/%Y - %H:%M hs")
 
 estado = dados["estado"]
 
