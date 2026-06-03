@@ -1,0 +1,8 @@
+{
+    "orden": "ORD-2026-0030",
+    "cliente": "Losi",
+    "equipo": "Notebook Dell",
+    "estado": "🔵 En reparación",
+    "mensaje": "Le estamos cambiando la pila",
+    "progreso": 75
+}
